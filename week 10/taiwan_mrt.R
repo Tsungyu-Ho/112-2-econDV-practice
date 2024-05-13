@@ -4,6 +4,10 @@ library(tidyverse)
 library(dplyr)
 library(sf)
 library(lwgeom)
+library(palmerpenguins)
+
+penguins <- penguins %>% 
+  drop_na()
 st_drivers() |> View() #串接到大寫的View
 
 # 畫台灣地圖----
@@ -112,29 +116,30 @@ sf_data_adjusted_mrt$MRTCODE <- as.factor(sf_data_adjusted_mrt$MRTCODE)
 sf_data_filtered_mrt <- sf_data_filtered_mrt[!is.na(sf_data_filtered_mrt$MRTCODE), ]
 
 ggplot() +
-  geom_sf(
-    data = sf_data_filtered
-  ) +
-  geom_sf(
-    data = sf_data_filtered_mrt, aes(col = MRTCODE),linewidth = 0.8
-  )+
-  scale_color_manual(
-    values = c('三鶯線' = '#79bce8',
-               '小碧潭線' = '#cfdb00',
-               '中和新蘆線' = '#f8b61c',
-               '文湖線' = '#c48c31',
-               '松山新店線' = '#008659',
-               '板南線' = '#0070bd',
-               '淡水信義線' = '#e3002c',
-               '新北投線' = '#fd92a3',
-               '機場捷運' = '#8246AF',
-               '貓空纜車' = '#77bc1f',
-               '環狀線' = '#ffdb00'),
-    na.value = "transparent") + # set NA values to transparent or the same as your plot background
-  labs(color = "捷運線路") # rename the color legend
-
-
-
-
-
-
+  geom_sf(data = sf_data_simplified_taipei_newtaipei) +
+  geom_sf(data = sf_data_filtered_mrt, aes(col = MRTCODE), linewidth = 0.8) +
+  scale_color_manual(values = c('三鶯線' = '#79bce8',
+                                '小碧潭線' = '#cfdb00',
+                                '中和新蘆線' = '#f8b61c',
+                                '文湖線' = '#c48c31',
+                                '松山新店線' = '#008659',
+                                '板南線' = '#0070bd',
+                                '淡水信義線' = '#e3002c',
+                                '新北投線' = '#fd92a3',
+                                '機場捷運' = '#8246AF',
+                                '貓空纜車' = '#77bc1f',
+                                '環狀線' = '#ffdb00'),
+                     na.value = "transparent") + 
+  labs(color = "捷運線路") + 
+  geom_sf(data = sf_data_GB_buffer, aes(fill = has_mrt), color = NA) +
+  scale_fill_manual(values = c("TRUE" = rgb(0, 0, 1, 0.6), 
+                               "FALSE" = rgb(1, 0, 0, 0.6)), 
+                    name = "500公尺內是否有捷運") +
+  geom_sf(data = sf_data_GB, color = "green", size = 0.5) +
+  ggtitle("新北市綠建築的交通可達性") +
+  labs(caption = "資料來源: 本研究自行整理") +
+  xlab("經度") + 
+  ylab("緯度") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.title.y = element_text(angle = 360, vjust = 0.5))
