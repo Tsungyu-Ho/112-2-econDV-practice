@@ -190,7 +190,7 @@ ggplot() +
 
 ggplot() +
   geom_sf(data = sf_data_simplified_taipei_newtaipei) +
-  geom_sf(data = sf_data_filtered_mrt, aes(col = MRTCODE), linewidth = 0.8) +
+  geom_sf(data = sf_data_filtered_mrt, aes(col = MRTCODE), linewidth = 0.9) +
   scale_color_manual(values = c('三鶯線' = '#79bce8',
                                 '小碧潭線' = '#cfdb00',
                                 '中和新蘆線' = '#f8b61c',
@@ -204,7 +204,7 @@ ggplot() +
                                 '環狀線' = '#ffdb00',
                                 'TRUE' = "blue", 'FALSE' = "red"), 
                      na.value = "transparent") +
-  labs(color = "捷運線路 與 綠建築是否有捷運") + 
+  labs(color = "捷運線路 與 綠建築附近是否有捷運") + 
   geom_sf(data = sf_data_GB_buffer, aes(fill = has_mrt), color = NA) +
   scale_fill_manual(values = c("TRUE" = rgb(0, 0, 1, 0.2), 
                                "FALSE" = rgb(1, 0, 0, 0.2)), 
@@ -217,3 +217,6 @@ ggplot() +
   theme_minimal() +
   theme(plot.title = element_text(hjust = 0.5),
         axis.title.y = element_text(angle = 360, vjust = 0.5))
+
+
+
