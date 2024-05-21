@@ -209,7 +209,7 @@ ggplot() +
   geom_sf(data = sf_data_GB_buffer, aes(fill = has_mrt), color = NA) +
   scale_fill_manual(values = c("TRUE" = rgb(0, 0, 1, 0.2), 
                                "FALSE" = rgb(1, 0, 0, 0.2)), 
-                    name = "500公尺內是否有捷運") +
+                    name = "綠建築方圓500公尺緩衝區") +
   geom_sf(data = sf_data_GB, aes(color = has_mrt), size = 0.5) +
   ggtitle("新北市綠建築的交通可達性") +
   labs(caption = "資料來源: 財團法人台灣建築中心、開放資料 - 國土測繪圖資e商城、本研究自行整理") +
