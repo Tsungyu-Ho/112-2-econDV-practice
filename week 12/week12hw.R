@@ -222,7 +222,7 @@ ggplot() +
 register_stadiamaps("2f04c610-4c67-41e1-8c9f-278b151ecd4e", write = FALSE)
 weekbbox <- c(left = 121.28269, bottom = 24.9, right = 121.7, top = 25.22)
 
-#============ 以下是錯的
+#============ 以下是錯的 ===
 get_stadiamap(weekbbox, zoom = 10, maptype = "stamen_toner_lite") |> ggmap() -> ggmap
 
 ggmap + 
