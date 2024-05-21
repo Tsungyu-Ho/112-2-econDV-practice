@@ -190,7 +190,7 @@ ggplot() +
 
 
 ggplot() +
-  geom_sf(data = sf_data_simplified_taipei_newtaipei) +
+  geom_sf(data = sf_data_simplified_taipei_newtaipei, color = "white", size = 0.3)+
   geom_sf(data = sf_data_filtered_mrt, aes(col = MRTCODE), linewidth = 0.9) +
   scale_color_manual(values = c('三鶯線' = '#79bce8',
                                 '小碧潭線' = '#cfdb00',
@@ -221,6 +221,8 @@ ggplot() +
 
 register_stadiamaps("2f04c610-4c67-41e1-8c9f-278b151ecd4e", write = FALSE)
 weekbbox <- c(left = 121.28269, bottom = 24.9, right = 121.7, top = 25.22)
+
+#============ 以下是錯的
 get_stadiamap(weekbbox, zoom = 10, maptype = "stamen_toner_lite") |> ggmap() -> ggmap
 
 ggmap + 
