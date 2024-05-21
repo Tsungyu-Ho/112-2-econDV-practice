@@ -20,7 +20,7 @@ ggplot(df, aes(x=period, y=coefficient, group=1)) +
   geom_point() +
   xlab("時間區段") + 
   ylab("係數") +
-  ggtitle("不同時間區段的 S 係數值及其信賴區間") +
+  ggtitle("不同時間區段的係數值及其信賴區間") +
   labs(caption = "資料來源: 本研究整理") +
   theme(plot.caption = element_text(hjust = 0.5)) + 
   theme_minimal()
