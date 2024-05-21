@@ -205,7 +205,7 @@ ggplot() +
                                 '環狀線' = '#ffdb00',
                                 'TRUE' = "blue", 'FALSE' = "red"), 
                      na.value = "transparent") +
-  labs(color = "捷運線路 與 綠建築附近是否有捷運") + 
+  labs(color = "綠建築附近是否有捷運 與 捷運線路") + 
   geom_sf(data = sf_data_GB_buffer, aes(fill = has_mrt), color = NA) +
   scale_fill_manual(values = c("TRUE" = rgb(0, 0, 1, 0.2), 
                                "FALSE" = rgb(1, 0, 0, 0.2)), 
