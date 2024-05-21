@@ -15,36 +15,45 @@ ggplot(df, aes(x = period, y = coefficient)) +
 
 #建立誤差棒圖
 ggplot(df, aes(x=period, y=coefficient, group=1)) +
-  geom_errorbar(aes(ymin=lower_bound, ymax=upper_bound), width=.2,
+  geom_errorbar(aes(ymin=lower_bound, ymax=upper_bound), width=.1,
                 position=position_dodge(0.05)) +
-  geom_point()+
+  geom_point() +
   xlab("時間區段") + 
   ylab("係數") +
-  ggtitle("不同時間區段的S係數值及其信賴區間")
+  ggtitle("不同時間區段的 S 係數值及其信賴區間") +
+  labs(caption = "資料來源: 本研究整理") +
+  theme(plot.caption = element_text(hjust = 0.5)) + 
+  theme_minimal()
 
-# 建立森林圖
-ggplot(df, aes(x = coefficient, y = period)) +
-  geom_vline(xintercept = 0, color = "grey", linetype = "dashed") +
-  geom_point(size = 2) +
-  geom_errorbarh(aes(xmin = lower_bound, xmax = upper_bound), height = .2) +
-  xlab("係數及其信賴區間") +
-  ylab("時間區段") +
-  ggtitle("不同時間區段的係數值及其95%信賴區間")
+ggplot(df, aes(x=period, y=coefficient, group=1)) +
+  geom_errorbar(aes(ymin=lower_bound, ymax=upper_bound), width=.1, position=position_dodge(0.05)) +
+  geom_point() +
+  xlab("時間區段") + 
+  ylab("綠建築溢價率(%)") +
+  ggtitle("不同時間區段的綠建築溢價率及其信賴區間") +
+  labs(caption = "資料來源: 本研究整理") +
+  theme(plot.caption = element_text(hjust = 0.5), 
+        plot.title = element_text(hjust = 0.5),
+        plot.title.position = "plot",
+        axis.title.y = element_text(angle = 270, vjust = 0.5)) + 
+  theme_minimal() +
+  scale_y_continuous(breaks = seq(from = -13, to = 6, by = 1)) +
+  coord_fixed(ratio = 0.5/2)
 
 # 載入ggplot2套件
-library(ggplot2)
+# library(ggplot2)
 
 # 創建資料
-df_1 <- data.frame(
-  Periods = c("104~106", "107~112"),  # 時間區段
-  Estimates = c(-12.103, 3.252),   # 係數
-  Lower_CI = c(-12.855, 2.885),   # 信賴區間下界
-  Upper_CI = c(-11.403, 3.625),   # 信賴區間上界
-  Group = factor(1:2)  # 組別 (這邊我們只用數字來表示，你也可以替換成其他的類別變數)
-)
+#df_1 <- data.frame(
+#  Periods = c("104~106", "107~112"),  # 時間區段
+#  Estimates = c(-12.103, 3.252),   # 係數
+#  Lower_CI = c(-12.855, 2.885),   # 信賴區間下界
+#  Upper_CI = c(-11.403, 3.625),   # 信賴區間上界
+#  Group = factor(1:2)  # 組別 (這邊我們只用數字來表示，你也可以替換成其他的類別變數)
+#)
 
 # 建立信賴區間圖
-ggplot(data = df_1, aes(x = Estimates, y = Group)) + 
-  geom_point() + 
-  geom_errorbarh(aes(xmin = Lower_CI, xmax = Upper_CI), height = 0.2) + 
-  labs(x = "係數及其信賴區間", y = "時間期間", title = "不同時間區段之係數的信賴區間圖")
+#ggplot(data = df_1, aes(x = Estimates, y = Group)) + 
+#  geom_point() + 
+#  geom_errorbarh(aes(xmin = Lower_CI, xmax = Upper_CI), height = 0.2) + 
+#  labs(x = "係數及其信賴區間", y = "時間期間", title = "不同時間區段之係數的信賴區間圖")
