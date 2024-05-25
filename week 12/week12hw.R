@@ -8,6 +8,7 @@ library(palmerpenguins)
 library(purrr)
 # library(rgdal)
 library(ggmap)
+library(econDV2)
 
 penguins <- penguins %>% 
   drop_na()
@@ -219,8 +220,42 @@ ggplot() +
   theme(plot.title = element_text(hjust = 0.5),
         axis.title.y = element_text(angle = 360, vjust = 0.5))
 
-register_stadiamaps("2f04c610-4c67-41e1-8c9f-278b151ecd4e", write = FALSE)
-weekbbox <- c(left = 121.28269, bottom = 24.9, right = 121.7, top = 25.22)
+#register_stadiamaps("2f04c610-4c67-41e1-8c9f-278b151ecd4e", write = FALSE)
+#weekbbox <- c(left = 121.28269, bottom = 24.9, right = 121.7, top = 25.22) 
+
+
+ggplot() +
+  geom_sf(data = sf_data_simplified_taipei_newtaipei, color = "white", size = 0.3)+
+  geom_sf(data = sf_data_filtered_mrt, aes(col = MRTCODE), linewidth = 0.9) +
+  scale_color_manual(values = c('三鶯線' = '#79bce8',
+                                '小碧潭線' = '#cfdb00',
+                                '中和新蘆線' = '#f8b61c',
+                                '文湖線' = '#c48c31',
+                                '松山新店線' = '#008659',
+                                '板南線' = '#0070bd',
+                                '淡水信義線' = '#e3002c',
+                                '新北投線' = '#fd92a3',
+                                '機場捷運' = '#8246AF',
+                                '貓空纜車' = '#77bc1f',
+                                '環狀線' = '#ffdb00',
+                                'TRUE' = "blue", 'FALSE' = "red"), 
+                     na.value = "transparent") +
+  labs(color = "綠建築附近是否有捷運 與 捷運線路") + 
+  geom_sf(data = sf_data_GB_buffer, aes(fill = has_mrt), color = NA) +
+  scale_fill_manual(values = c("TRUE" = rgb(0, 0, 1, 0.2), 
+                               "FALSE" = rgb(1, 0, 0, 0.2)), 
+                    name = "綠建築方圓500公尺緩衝區") +
+  geom_sf(data = sf_data_GB, aes(color = has_mrt), size = 0.5) +
+  ggtitle("新北市綠建築的交通可達性") +
+  labs(caption = "資料來源: 財團法人台灣建築中心、開放資料 - 國土測繪圖資e商城、本研究自行整理") +
+  xlab("經度") + 
+  ylab("緯度") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.title.y = element_text(angle = 360, vjust = 0.5))-> mrt_tra
+
+
+
 
 #============ 以下是錯的 ===
 get_stadiamap(weekbbox, zoom = 10, maptype = "stamen_toner_lite") |> ggmap() -> ggmap
