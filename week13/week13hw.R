@@ -42,20 +42,30 @@ df$是否顯著 <- ifelse(df$period == "107年度", "不顯著", "顯著")
 ggplot(df, aes(x = period, y = coefficient, color = 是否顯著, group = 1)) +
   geom_errorbar(aes(ymin = lower_bound, ymax = upper_bound), width = .1) +
   scale_color_manual(values = c("不顯著" = "red", "顯著" = "black")) +
-  geom_point(size = 2.5) +
-  geom_text(aes(label = round(coefficient, 2)), hjust = -0.4) +
+  geom_point(size = 3.5) +
+  geom_text(aes(label = sprintf('%.2f%%', coefficient)), hjust = -0.4) +
   xlab("時間區段") + 
   ylab("綠建築溢價率(%)") +
   ggtitle("不同時間區段的綠建築溢價率及其信賴區間(橫斷面分析)") +
   labs(caption = "資料來源: 本研究整理") +
-  theme_minimal() +
-  theme(plot.caption = element_text(hjust = 0.5),
-        plot.title = element_text(hjust = 0.5),
-        plot.title.position = "plot",
-        axis.title.y = element_text(angle = 360, vjust = 0.5)) + 
+  theme_bw() +
+  theme(
+    plot.caption = element_text(hjust = 0), 
+    plot.title = element_text(hjust = 0.5),
+    plot.title.position = "plot",
+    axis.title.y = element_text(angle = 0, vjust = 0.5),
+    axis.text = element_text(size=12),
+    axis.title = element_text(size=14)
+  ) +
   scale_y_continuous(breaks = breaks) +
-  geom_hline(yintercept = 0, linetype="dashed", color = "blue", size = 1) -> premium
+  geom_hline(yintercept = 0, linetype="dashed", color = "blue", size = 1) +
+  theme(
+    panel.grid.major = element_line(color = "grey", linewidth = 0.1), 
+    panel.grid.minor = element_line(color = "grey", linewidth = 0.05)
+  ) -> premium
 premium
+
+
 
 # 載入ggplot2套件
 # library(ggplot2)
