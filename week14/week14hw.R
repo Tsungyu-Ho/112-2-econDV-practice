@@ -81,7 +81,7 @@ complete_data <- merged_data %>%
   complete(dist, year, fill = list(mean_price = NA)) # 對每個行政區和每一年進行填補，若缺失則使用NA
 
 # 繪製動態地圖
-p = ggplot(merged_data, aes(frame = year, fill = mean_price)) + 
+p = ggplot(merged_data, aes(group = dist, frame = year, fill = mean_price)) + 
   geom_sf(data = merged_data, aes(), color = "white", size = 0.3) + 
   scale_fill_viridis_c(option = "magma", na.value = "lightgray") +  # 使用scale_fill_viridis_c并设定na.value为"lightgray"
   labs(
@@ -89,6 +89,7 @@ p = ggplot(merged_data, aes(frame = year, fill = mean_price)) +
     caption = "資料來源:本研究整理" )  + 
   theme_minimal() + 
   transition_time(year)
+p
 
 
 # 輸出動畫
