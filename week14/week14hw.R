@@ -90,6 +90,13 @@ p = ggplot(merged_data, aes(frame = year, fill = mean_price)) +
   theme_minimal() + 
   transition_time(year)
 
+
+# 輸出動畫
+animate(p, nframes = 100, fps = 10, end_pause = 30, output = 'C:\\D-disk\\Tsung-yu\\ma_1\\econDV\\112-2-econDV-practice\\week14\\animation.gif')
+anim_save("animation.gif", animation = p, nframes = 100, fps = 10, end_pause = 30 )
+
+
+
 # 輸出動畫
 animate(p, nframes = 100, fps = 10, end_pause = 30, output = 'animation.gif')
 
@@ -104,9 +111,6 @@ p = ggplot(merged_data, aes(frame = year, fill = mean_price)) +
   ) +
   theme_minimal() + 
   transition_time(year) 
-
-# 輸出動畫
-animate(p, nframes = 100, fps = 10, end_pause = 30, output = 'animation.gif')
 
 
 
