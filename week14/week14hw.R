@@ -100,14 +100,55 @@ basic_map <- ggplot(merged_data) +
     caption = "資料來源:本研究整理"    # 添加此行
   )
 
+# 篩選年份為112的數據 -----
+filtered_data <- merged_data %>% 
+  filter(年分 == 112)
+
+glimpse(filtered_data)
+
+# 將行政區區分出來
+basic_map <- ggplot(merged_data) + 
+  geom_sf(aes(geometry = geometry, fill = 價格區間, group = 行政區), color = "white") +
+  scale_fill_gradientn(colors = c("lightgray", "yellow", "red"), 
+                       values = rescale(c(0, 1, max(merged_data$mean_price, na.rm = TRUE))), 
+                       breaks = seq(0, max(merged_data$mean_price, na.rm = TRUE), 5),  
+                       labels = scales::comma 
+  ) +
+  theme_minimal() +
+  theme(legend.key.size = unit(1, "cm"), axis.title.y = element_text(angle = 360, vjust = 0.5, margin = margin(r = 15))) +
+  labs(
+    title = "{frame_time}年新北市各行政區綠建築每坪價格變化",  # 修改此行
+    x = "經度",
+    y = "緯度",
+    caption = "資料來源:本研究整理"    # 添加此行
+  ) + facet_grid(vars(merged_data$行政區) , scales = "free")
+basic_map
+
+# 將行政區區分出來
+basic_map_filter <- ggplot(filtered_data) + 
+  geom_sf(aes(geometry = geometry, fill = 價格區間, group = 行政區), color = "white") +
+  scale_fill_gradientn(colors = c("lightgray", "yellow", "red"), 
+                       values = rescale(c(0, 1, max(merged_data$mean_price, na.rm = TRUE))), 
+                       breaks = seq(0, max(merged_data$mean_price, na.rm = TRUE), 5),  
+                       labels = scales::comma 
+  ) +
+  theme_minimal() +
+  theme(legend.key.size = unit(1, "cm"), axis.title.y = element_text(angle = 360, vjust = 0.5, margin = margin(r = 15))) +
+  labs(
+    title = "{frame_time}年新北市各行政區綠建築每坪價格變化",  # 修改此行
+    x = "經度",
+    y = "緯度",
+    caption = "資料來源:本研究整理"    # 添加此行
+  ) + facet_wrap(vars(merged_data$行政區) , scales = "free")
+basic_map_filter
+
 anim_map <- basic_map +
   transition_time(年分)
 
 anim_map
 
-animate(anim_map, nframes = 200, fps = 10, end_pause = 30, height = 600, width = 800, output = 'animation0601.gif')
-anim_save("animation0601.gif", animation = anim_map, height = 600, width = 800, nframes = 200, fps = 10, end_pause = 30 )
-
+animate(anim_map, nframes = 200, fps = 10, end_pause = 30, height = 600, width = 800, output = 'animation0604.gif')
+anim_save("animation0604.gif", animation = anim_map, height = 600, width = 800, nframes = 200, fps = 10, end_pause = 30 )
 
 
 saveGIF({
